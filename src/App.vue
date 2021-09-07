@@ -7,7 +7,7 @@
       <p>Название: <strong>{{ name }}</strong></p>
       <p>Версия: <strong>{{ version }}</strong></p>
 
-      <button class="btn" @click="changeInfo">Изменить</button>
+      <button class="btn" @click="change">Изменить</button>
     </div>
   </div>
 </template>
@@ -20,8 +20,15 @@ export default {
     const name = ref('VueJS')
     const version = ref(3)
 
+    function changeInfo() {
+      name.value = 'Vue JS !'
+      version.value = 4
+    }
+
     return {
-      name, version
+      name, 
+      version,
+      change: changeInfo
     }
   }
   // data() {
