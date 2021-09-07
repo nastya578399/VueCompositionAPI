@@ -5,7 +5,7 @@
       <small>data, methods, computed, watch</small>
       <hr>
       <p>Название: <strong>{{ name }}</strong></p>
-      <p>Версия: <strong>{{ version }}</strong></p>
+      <p>Версия: <strong>{{ version }} ({{ doubleVersion }})</strong></p>
 
       <button class="btn" @click="change">Изменить</button>
     </div>
@@ -13,27 +13,31 @@
 </template>
 
 <script>
-import {ref, reactive, toRefs, isRef, isReactive} from 'vue'
+import {ref, reactive, toRefs, isRef, isReactive, computed} from 'vue'
 
 export default {
   setup() {
     const name = ref('VueJS')
     const version = ref(3)
 
-    console.log(isRef(name)) // true
-    console.log(isRef(version.value)) // false
 
     const framefork = reactive({
       name: 'VueJs',
       version: 3
     })
 
-    console.log(isReactive(framefork))
-    console.log(isReactive(framefork.value))
+    const doubleVersion = computed(() => {
+      return version.value * 2
+    })
+
+
+    console.log(isRef(doubleVersion))
+    console.log(doubleVersion.value)
+
 
     function changeInfo() {
       name.value = 'Vue JS !'
-      version.value = 4
+      version.value = 42
       // framefork.name = 'Vue JS !'
       // framefork.version = 42
     }
@@ -41,7 +45,8 @@ export default {
     return {
       name: name,
       version: version,
-      change: changeInfo
+      change: changeInfo,
+      doubleVersion
     }
   }
   // data() {
