@@ -13,7 +13,11 @@
 
       <button class="btn" @click="change">Изменить</button>
     </div>
-    <frame-work-info :name="name" :version="version"></frame-work-info>
+    <frame-work-info 
+    :name="name" 
+    :version="version"
+    @change-version="changeVersion"
+    ></frame-work-info>
 
   </div>
 </template>
@@ -63,11 +67,16 @@ export default {
       version.value = 42
     }
 
+    function changeVersion(num) {
+      version.value = num
+    }
+
     return {
       name,
       version,
       change: changeInfo,
-      firstName
+      firstName,
+      changeVersion
     }
   },
   components: {
