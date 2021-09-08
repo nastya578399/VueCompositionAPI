@@ -4,21 +4,37 @@
       <h1>Vue Composition Api</h1>
       <small>data, methods, computed, watch</small>
       <hr>
-      <p>Название: <strong>{{ name }}</strong></p>
-      <p>Версия: <strong>{{ version }} ({{ doubleVersion }})</strong></p>
+      
+
+      <div class="form-control">
+        <!-- <input type="text" ref="textInput"> -->
+        <input type="text" v-model="firstName">
+      </div>
 
       <button class="btn" @click="change">Изменить</button>
     </div>
+    <frame-work-info :name="name" :version="version"></frame-work-info>
+
   </div>
 </template>
 
 <script>
-import {ref, reactive, toRefs, isRef, isReactive, computed} from 'vue'
+import {ref, 
+reactive, 
+toRefs, 
+isRef, 
+isReactive, 
+computed,
+watch
+} from 'vue'
+import FrameWorkInfo from './FrameWorkInfo.vue'
 
 export default {
   setup() {
     const name = ref('VueJS')
     const version = ref(3)
+    const textInput = ref(null)
+    const firstName = ref('')
 
 
     const framefork = reactive({
@@ -26,40 +42,36 @@ export default {
       version: 3
     })
 
-    const doubleVersion = computed(() => {
-      return version.value * 2
+    // const doubleVersion = computed(() => {
+    //   return version.value * 2
+    // })
+
+
+
+    // watch(doubleVersion, (newValue, oldValue) => {
+    //   console.log('new', newValue)
+    //   console.log('old', oldValue)
+    // })
+
+    watch(firstName, (newV, oldV) => {
+        console.log(newV)
+        console.log(oldV)
     })
-
-
-    console.log(isRef(doubleVersion))
-    console.log(doubleVersion.value)
-
 
     function changeInfo() {
       name.value = 'Vue JS !'
       version.value = 42
-      // framefork.name = 'Vue JS !'
-      // framefork.version = 42
     }
 
     return {
-      name: name,
-      version: version,
+      name,
+      version,
       change: changeInfo,
-      doubleVersion
+      firstName
     }
+  },
+  components: {
+    FrameWorkInfo
   }
-  // data() {
-  //   return {
-  //     name: 'VueJS',
-  //     version: 3
-  //   }
-  // },
-  // methods: {
-  //   changeInfo() {
-  //     this.name = 'Vue JS!'
-  //     this.version = 4
-  //   }
-  // }
 }
 </script>
