@@ -8,10 +8,9 @@
 </template>
 
 <script>
-import {computed} from 'vue'
+import {computed, inject} from 'vue'
 
 export default {
-    props: ['name', 'version'],
     emits: ['change-version'],
     computed: {
         doubleVersion() {
@@ -19,15 +18,19 @@ export default {
         }
     },
     setup(props, context){
-        console.log(props)
         function change() {
             //logic
             context.emit('change-version', 3)
         }
 
+        inject('name')
+        const version = inject('version')
+
         return {
+            name:inject('name'),
+            version: version,
             changeToThree: change,
-            doubleVersion: computed(() => props.version * 2)
+            doubleVersion: computed(() => version.value * 2)
         }
     }
 }
